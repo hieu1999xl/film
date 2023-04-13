@@ -2,17 +2,17 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button, Grid, Container } from "@mui/material";
-
+import { useGetMovies } from "../../services/movies";
 import { Movie } from "../../constants/models/Movies";
 import styles from "./Details.module.scss";
 import MoviesContext from "../../context/MoviesContext";
 import { useContext } from "react";
 
 const Details = () => {
-  const { movies } = useContext(MoviesContext);
+  const { movies, isLoading, isError } = useGetMovies();
   const router = useRouter();
   const { id }: any = router.query;
-  const movie = movies.find((mov) => mov.id === parseInt(id));
+  const movie = movies.find((mov: any) => mov.id === parseInt(id));
 
   const RenderBookTicketsButton = () => {
     return (

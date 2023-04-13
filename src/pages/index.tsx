@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const { movies, isLoading, isError } = useGetMovies();
-  console.log("movies", movies);
 
   const items = [
     {

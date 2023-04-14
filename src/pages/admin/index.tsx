@@ -1,31 +1,38 @@
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
 import { useGetMovies, useDeleteMovie, useGetMovie } from "../../services/movies";
 import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
+
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import Head from "next/head";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton,   Dialog,
+import {
+  Button,
+  Dialog,
+  Grid,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TextField,
+  Tooltip,
+  Typography,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
-  Button,
-  Paper, } from "@mui/material";
+  Paper
+} from '@mui/material';
+import Head from "next/head";
+import DeleteIcon from "@mui/icons-material/Delete";
 const Admin = () => {
   const [movies, setMovies] = React.useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isOpenCreate, setIsOpenCreate] = React.useState(false);
+  const [isOpenCreate, setIsOpenCreate] = React.useState(true);
   const [idItem, setIdItem] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -153,19 +160,136 @@ const Admin = () => {
       onClose={() => setIsOpenCreate(false)}
       open={isOpenCreate}
       disableEscapeKeyDown={true}
+      fullWidth={true}
+      maxWidth='md'
     >
       <DialogTitle>
         {" "}
-        <Typography variant="h4">Delete</Typography>
+        <Typography variant="h4">Create New Film</Typography>
       </DialogTitle>
       <DialogContent>
-            
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              name="name"
+              label='Name Film'
+              variant="outlined"
+              // value={productState?.sku}
+              // onChange={(event: any) => {
+              //   onChangeProductState('sku', event.target.value.toUpperCase());
+              // }}
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="language"
+              label='Language'
+              variant="outlined"
+              // value={productState?.name}
+              // onChange={(event: any) => {
+              //   onChangeProductState('name', event.target.value);
+              // }}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="runtimes"
+              label='Run times'
+              variant="outlined"
+              // value={String(productState?.price)}
+              // onChange={(event: any) => {
+              //   onChangeProductState('price', event.target.value);
+              // }}
+              type="text"
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="description"
+              label='Description'
+              variant="outlined"
+              // value={productState?.name}
+              // onChange={(event: any) => {
+              //   onChangeProductState('name', event.target.value);
+              // }}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="type"
+              label='Type'
+              variant="outlined"
+              // value={String(productState?.price)}
+              // onChange={(event: any) => {
+              //   onChangeProductState('price', event.target.value);
+              // }}
+              type="text"
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="ticketCost"
+              label='Ticket Cost'
+              variant="outlined"
+              // value={productState?.name}
+              // onChange={(event: any) => {
+              //   onChangeProductState('name', event.target.value);
+              // }}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="synopsis"
+              // label='Synopsis'
+              variant="outlined"
+              // value={String(productState?.price)}
+              // onChange={(event: any) => {
+              //   onChangeProductState('price', event.target.value);
+              // }}
+              type="file"
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="synopsis"
+            label="Synopsis"
+            multiline
+            rows={5}
+            variant="outlined"
+            fullWidth
+            // value={productState?.description}
+            // onChange={(event: any) => {
+            //   onChangeProductState('description', event.target.value);
+            // }}
+          />
+        </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setIsOpenCreate(false)} variant="contained">No</Button>
-        <Button onClick={() => removeItem()} variant="contained" color="error">
-          Yes
+      <Button onClick={() => removeItem()} variant="contained" color="error">
+          Cancel
         </Button>
+        <Button onClick={() => setIsOpenCreate(false)} variant="contained">Create</Button>
       </DialogActions>
     </Dialog>
       </>

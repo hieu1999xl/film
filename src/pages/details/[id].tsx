@@ -52,7 +52,7 @@ const Details = () => {
       <Head>
         <title>{movie.name}</title>
       </Head>
-      <Container>
+      <Container sx={{paddingTop: '80px'}}>
         <Grid container spacing={2}>
           <Grid item>
             <img src={movie.img} width={250} height={375} />

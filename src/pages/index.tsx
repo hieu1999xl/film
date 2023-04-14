@@ -95,21 +95,14 @@ export default function Home() {
       <Head>
         <title>Book My Ticket | Home</title>
       </Head>
-      <Carousel height="612px">
+      <Carousel>
         {items.map((item, i) => (
-          <Paper
-            key={item.name}
-            style={{
-              backgroundImage: `url(${item.image})`,
-              backgroundSize: "cover",
-              height: "100%",
-            }}
-          ></Paper>
+          <img width={'100%'} height={'auto'} key={item.name} src={item.image}/>
         ))}
       </Carousel>
       <div className={styles.moviesContainer}>
         <h1 className={styles.title}>Recommended Movies</h1>
-        <Box sx={{ justifyContent: 'flex-start', display: 'flex', paddingBottom: '16px' }}>
+        <Box sx={{ justifyContent: 'center', display: 'flex', paddingBottom: '16px' }}>
             <FormControl>
               <TextField
                 size="small"

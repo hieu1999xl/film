@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useRouter } from 'next/router'
+import styles from "./Login.module.scss";
 
 // import "./styles.scss";
 
@@ -59,29 +60,29 @@ function Login() {
 
   // JSX code for login form
   const renderForm = (
-    <div className="form">
+    <div className={styles.form}>
       <form onSubmit={handleSubmit}>
-        <div className="input-container">
+        <div className={styles.input_container}>
           <label>Username </label>
-          <input type="text" name="uname" required />
+          <input type="text" className={styles.text_input} name="uname" required />
           {renderErrorMessage("uname")}
         </div>
-        <div className="input-container">
+        <div className={styles.input_container}>
           <label>Password </label>
-          <input type="password" name="pass" required />
+          <input type="password" className={styles.text_input} name="pass" required />
           {renderErrorMessage("pass")}
         </div>
-        <div className="button-container">
-          <input type="submit" />
+        <div className={styles.button_container}>
+          <input className={styles.submit} type="submit"/>
         </div>
       </form>
     </div>
   );
 
   return (
-    <div className="app">
-      <div className="login-form">
-        <div className="title">Sign In</div>
+    <div className={styles.app_login}>
+      <div className={styles.login_form}>
+        <div className={styles.title}>Sign In</div>
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
       </div>
     </div>

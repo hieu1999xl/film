@@ -6,13 +6,13 @@ import { useGetMovies } from "../../services/movies";
 import { Movie } from "../../constants/models/Movies";
 import styles from "./Details.module.scss";
 import MoviesContext from "../../context/MoviesContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const Details = () => {
   const { movies, isLoading, isError } = useGetMovies();
   const router = useRouter();
   const { id }: any = router.query;
-  const movie = movies.find((mov: any) => mov.id === parseInt(id));
+  const movie = movies && movies?.find((mov: any) => mov.id === parseInt(id));
 
   const RenderBookTicketsButton = () => {
     return (

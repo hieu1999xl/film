@@ -3,18 +3,22 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 import { Button } from "@mui/material";
-
+import { useGetMovies } from "../../services/movies";
 import { Movie, Seats } from "../../constants/models/Movies";
 import styles from "./Seats.module.scss";
 import MoviesContext from "../../context/MoviesContext";
 
 const Seats = () => {
-  const { movies } = useContext(MoviesContext);
+  const { movies, isLoading, isError } = useGetMovies();
   const router = useRouter();
   let selectedSeats: string[] = [];
   const { id, seats }: any = router.query;
-  const movie = movies.find((mov) => mov.id === parseInt(id));
-  const [seatDetails, setSeatDetails] = useState<Seats>(movie?.seats || {});
+  const movie = movies && movies?.find((mov:any) => mov.id === parseInt(id));
+  let seatsFilm = {}
+    if (movie) {
+      seatsFilm = JSON.parse(movie?.seats)
+    }
+  const [seatDetails, setSeatDetails] = useState<Seats>(seatsFilm || {});
 
   useEffect(() => {
     if (!seats) {
@@ -73,7 +77,8 @@ const Seats = () => {
 
   const RenderSeats = () => {
     let seatArray = [];
-    for (let key in seatDetails) {
+    for (let key in seatDetails) {   
+     
       let colValue = seatDetails[key].map((seatValue, rowIndex) => (
         <span key={`${key}.${rowIndex}`} className={styles.seatsHolder}>
           {rowIndex === 0 && <span className={styles.colName}>{key}</span>}

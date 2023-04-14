@@ -37,4 +37,21 @@ async function useBookTicketByMovieId(id: string, seatDetails: Seats) {
   );
 }
 
-export { useGetMovies, useGetMovieById, useBookTicketByMovieId };
+async function useDeleteMovie(id: string)  {
+  return await axios.delete(`https://testapi.io/api/movies/resource/movies/${id}`)
+}
+
+async function usePutMovie(id: string, params: any)  {
+  return await axios.delete(`https://testapi.io/api/movies/resource/movies/${id}`, params)
+}
+
+async function useGetMovie()  {
+  return await axios.get(`https://testapi.io/api/movies/resource/movies/`)
+}
+
+async function usePostMovie(params: any)  {
+  return await axios.post(`https://testapi.io/api/movies/resource/movies/`, params)
+}
+
+
+export { useGetMovies, useGetMovieById, useBookTicketByMovieId, useDeleteMovie, usePutMovie, useGetMovie, usePostMovie };

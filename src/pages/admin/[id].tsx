@@ -62,20 +62,20 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     isSubmitting,
   } = useFormik({
     initialValues: DEFAULT_APP,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("img", values.img);
       formData.append("language", values.language);
       formData.append("runtimes", values.runtimes);
       formData.append("synopsis", values.synopsis);
+      formData.append("description", values.description);
       formData.append("type", values.type);
       formData.append("ticketCost", values.ticketCost);
       formData.append("rows", values.rows);
       formData.append("cols", values.cols);
       formData.append("seats", values.seats);
-
-      usePutMovieData(id, formData)
+       usePutMovieData(id, values)
         .then(() => {
           router.push("/admin");
         })
@@ -224,8 +224,6 @@ const Details = ({ onSave }: IPageHeaderProps) => {
               variant="outlined"
               value={values?.img}
               onChange={(event: any) => {
-                console.log('e', event);
-                
                 onChangeAppState("img", event.target.value);
               }}
               type="file"
@@ -247,8 +245,11 @@ const Details = ({ onSave }: IPageHeaderProps) => {
           />
         </Grid>
         <DialogActions>
+          
           <Button variant="contained" color="error">
+          <Link href='/admin'>
             Back
+            </Link>
           </Button>
           <Button type="submit" variant="contained">
             Edit

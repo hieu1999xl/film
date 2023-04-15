@@ -24,7 +24,7 @@ function useGetTicket() {
   );
 
   return {
-    ticket: data?.data,
+    tickets: data?.data,
     isLoading: !error && !data,
     isError: error,
   };
@@ -80,7 +80,7 @@ async function useGetMovieId(id: any) {
 
 async function useDeleteTicket(id: string) {
   return await axios.delete(
-    `https://testapi.io/api/movies/resource/movies/${id}`
+    `https://testapi.io/api/movies/resource/tickets/${id}`
   );
 }
 

@@ -6,6 +6,7 @@ import MoviesContext from '../context/MoviesContext'
 import { useState } from 'react';
 import { Movie } from '../constants/models/Movies';
 import { movies as mockMovies } from './../constants/movies';
+import { Roboto } from 'next/font/google'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [movies, setMovies] = useState<Movie[]>(mockMovies);

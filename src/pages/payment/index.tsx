@@ -10,19 +10,16 @@ import styles from "./Payment.module.scss";
 import MoviesContext from "../../context/MoviesContext";
 import { useGetMovieId, usePostTicket } from "../../services/movies";
 import { useGetMovies } from "../../services/movies";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Tickets = () => {
   const { movies, isLoading, isError } = useGetMovies();
   const router = useRouter();
   const [seconds, setSeconds] = useState(600);
   const [isTimerCompleted, setIsTimerCompleted] = useState(false);
-  const [numberTicket, setNumberTicket] = useState<any>();
-  const [nameFilm, setNameFilm] = useState();
-  const [price, setPrice] = useState();
-  const [totalTicket, setTotalTicket] = useState();
-  const [totalPrice, setTotalPrice] = useState();
   const [cost, setCost] = useState();
   const [customer, setCustomer] = useState();
-  const [showTime, setShowTime] = useState();
+
   const [selectItem, setSelectItem] = useState<any>();
 
   let movieSeatDetails: Seats = {};
@@ -129,6 +126,17 @@ const Tickets = () => {
     };
     usePostTicket(params)
       .then(() => {
+        toast.success('🦄 Wow so easy!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+          
         router.push("/");
       })
       .catch((err) => {

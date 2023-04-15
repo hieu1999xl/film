@@ -1,9 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import { useGetMovieId, useDeleteMovie, useGetMovie, usePostMovie } from "../../services/movies";
-import TableFooter from "@mui/material/TableFooter";
-import path from "path";
-import fs from "fs";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
@@ -30,7 +27,6 @@ import {
   CircularProgress
 } from '@mui/material';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
-import CheckIcon from '@mui/icons-material/Check';
 import Head from "next/head";
 import DeleteIcon from "@mui/icons-material/Delete";
 const Admin = () => {
@@ -53,8 +49,6 @@ const Admin = () => {
   const [synopsis, setSynopsis] = React.useState();
 
   const [dataById, setDataByID] =  React.useState<any>();
-  console.log('dataById', dataById);
-  
   const usePostData = () => {
     let params = {
       name: name,
@@ -84,9 +78,6 @@ const Admin = () => {
     })
   }
  
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
   const getData = () => {
     setIsLoading(true)
     useGetMovie().then((res: any)=> {
@@ -101,15 +92,6 @@ const Admin = () => {
     getData()
   }, [])
 
-  // React.useEffect(() =>{
-  //   getItemById(idItem)
-  // }, [isOpenEdit])
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
   const deleteAction = (id: any) => {
     setIsOpen(true)
     setIdItem(id)
@@ -364,7 +346,6 @@ const Admin = () => {
               name="synopsis"
               variant="outlined"
               onChange={(event: any) => {
-                console.log(event.target.files[0]);
                 setFilse(event.target.files[0].name);
               }}
               type="file"

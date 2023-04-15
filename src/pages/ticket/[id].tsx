@@ -3,53 +3,31 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button, Grid, Container } from "@mui/material";
-import { useGetMovies } from "../../services/movies";
-import { Movie } from "../../constants/models/Movies";
-import styles from "./Details.module.scss";
-import MoviesContext from "../../context/MoviesContext";
-import { useContext, useEffect } from "react";
+import { useGetTicket } from "../../services/movies";
+import { useEffect } from "react";
 import { useFormik } from "formik";
-import { useGetMovieId, usePutMovieData } from "../../services/movies";
+import { usePutTicketData } from "../../services/movies";
 import { TextField, DialogActions, Box } from "@mui/material";
 interface IPageHeaderProps {
   onSave: () => void;
 }
 const Details = ({ onSave }: IPageHeaderProps) => {
-  const [name, setName] = React.useState();
-  const [language, setLangua] = React.useState();
-  const [runtimes, setRuntimes] = React.useState();
-  const [description, setDescription] = React.useState();
-  const [type, setTypes] = React.useState();
-  const [cost, setCost] = React.useState();
-  const [file, setFilse] = React.useState();
-  const [synopsis, setSynopsis] = React.useState();
-  const [dataById, setDataByID] = React.useState<any>();
-  const { movies, isLoading, isError } = useGetMovies();
+
+  const { tickets, isLoading, isError } = useGetTicket();
   const router = useRouter();
   const { id }: any = router.query;
-  const movie = movies && movies?.find((mov: any) => mov.id === parseInt(id));
-  // const getItemById = (item: any) => {
-  //   useGetMovieId(item).then((res) => {
-  //     setDataByID(res.data.data)
-  //   }).then((err) => {
-  //     console.log('err', err);
-  //   })
-  // }
-  // React.useEffect(() => {
-  //   getItemById(id)
-  // }, [id])
+  const ticket = tickets && tickets?.find((mov: any) => mov.id === parseInt(id));
+
   let DEFAULT_APP = {
-    name: "",
-    img: "",
-    language: "",
-    runtimes: "",
-    description: "",
-    synopsis: "",
-    type: "",
+    code: "",
+    number_tickets: "",
+    name_firm: "",
+    price: "",
+    total_price: "",
+    total_ticket: "",
+    name_customer: "",
     ticketCost: "",
-    rows: "",
-    cols: "",
-    seats: "",
+    showTime: "",
   };
 
   const {
@@ -64,20 +42,18 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     initialValues: DEFAULT_APP,
     onSubmit: async (values) => {
       const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("img", values.img);
-      formData.append("language", values.language);
-      formData.append("runtimes", values.runtimes);
-      formData.append("synopsis", values.synopsis);
-      formData.append("type", values.type);
-      formData.append("ticketCost", values.ticketCost);
-      formData.append("rows", values.rows);
-      formData.append("cols", values.cols);
-      formData.append("seats", values.seats);
+      formData.append("code", values.code);
+      formData.append("number_tickets", values.number_tickets);
+      formData.append("name_firm", values.name_firm);
+      formData.append("price", values.price);
+      formData.append("total_price", values.total_price);
+      formData.append("total_ticket", values.total_ticket);
+      formData.append("name_customer", values.name_customer);
+      formData.append("showTime", values.showTime);
 
-      usePutMovieData(id, formData)
+      usePutTicketData(id, values)
         .then(() => {
-          router.push("/admin");
+          router.push("/ticket");
         })
         .catch((err) => {
           console.log("err", err);
@@ -87,44 +63,19 @@ const Details = ({ onSave }: IPageHeaderProps) => {
 
   useEffect(() => {
     setValues({
-      name: movie?.name,
-      img: movie?.file,
-      language: movie?.language,
-      runtimes: movie?.runtimes,
-      description: movie?.description,
-      synopsis: movie?.synopsis,
-      type: movie?.type,
-      ticketCost: movie?.ticketCost,
-      rows: "20",
-      cols: "6",
-      seats:
-        '{"A":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"B":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"C":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"D":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"E":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"F":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"G":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"H":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"I":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"J":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}',
+      code: ticket?.code,
+      number_tickets: ticket?.number_tickets,
+      name_firm: ticket?.name_firm,
+      price: ticket?.price,
+      total_price: ticket?.total_price,
+      total_ticket: ticket?.total_ticket,
+      name_customer: ticket?.name_customer,
+      ticketCost: ticket?.ticketCost,
+      showTime: ticket?.showTime,
     });
-  }, [movie]);
+  }, [ticket]);
 
-  const usePutData = () => {
-    let params = {
-      name: name || movie.name,
-      img: file || movie.file,
-      language: language || movie.language,
-      runtimes: runtimes || movie.runtimes,
-      description: description || movie.description,
-      synopsis: synopsis || movie.synopsis,
-      type: type || movie.type,
-      ticketCost: cost || movie.ticketCost,
-      rows: 20,
-      cols: 6,
-      seats:
-        '{"A":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"B":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"C":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"D":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"E":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"F":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"G":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"H":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"I":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"J":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}',
-    };
-    usePutMovieData(id, params)
-      .then(() => {
-        router.push("/admin");
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
+
   const onChangeAppState = (key: string, value: any) => {
     setFieldValue(key, value);
   };
@@ -132,29 +83,15 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     <Container>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Name Film"
-              variant="outlined"
-              value={values?.name}
-              onChange={(event: any) => {
-                onChangeAppState("name", event.target.value);
-              }}
-              required
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid item xs={6}>
             <TextField
               fullWidth
               name="language"
-              label="Language"
+              label="Code"
               variant="outlined"
-              value={values?.language}
+              value={values?.code}
               onChange={(event: any) => {
-                onChangeAppState("language", event.target.value);
+                onChangeAppState("code", event.target.value);
               }}
               // required
             />
@@ -163,11 +100,11 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             <TextField
               fullWidth
               name="runtimes"
-              label="Run times"
+              label="Number Tickets"
               variant="outlined"
-              value={values?.runtimes}
+              value={values?.number_tickets}
               onChange={(event: any) => {
-                onChangeAppState("runtimes", event.target.value);
+                onChangeAppState("number_tickets", event.target.value);
               }}
               type="text"
               required
@@ -179,11 +116,11 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             <TextField
               fullWidth
               name="description"
-              label="Description"
+              label="Name Film"
               variant="outlined"
-              value={values?.description}
+              value={values?.name_firm}
               onChange={(event: any) => {
-                onChangeAppState("description", event.target.value);
+                onChangeAppState("name_firm", event.target.value);
               }}
               required
             />
@@ -192,14 +129,44 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             <TextField
               fullWidth
               name="type"
-              label="Type"
+              label="Price"
               variant="outlined"
-              value={values?.type}
+              value={values?.price}
               onChange={(event: any) => {
-                onChangeAppState("type", event.target.value);
+                onChangeAppState("price", event.target.value);
               }}
               type="text"
               required
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="ticketCost"
+              label="Total Price"
+              variant="outlined"
+              value={values?.total_price}
+              onChange={(event: any) => {
+                onChangeAppState("total_price", event.target.value);
+              }}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              name="synopsis"
+              label="Total Ticket"
+              variant="outlined"
+              value={values?.total_ticket}
+              onChange={(event: any) => {
+                console.log('e', event);
+                
+                onChangeAppState("total_ticket", event.target.value);
+              }}
+              type="text"
             />
           </Grid>
         </Grid>
@@ -222,33 +189,34 @@ const Details = ({ onSave }: IPageHeaderProps) => {
               fullWidth
               name="synopsis"
               variant="outlined"
-              value={values?.img}
+              label="Show Time"
+              value={values?.showTime}
               onChange={(event: any) => {
-                console.log('e', event);
-                
-                onChangeAppState("img", event.target.value);
+                onChangeAppState("showTime", event.target.value);
               }}
-              type="file"
+              type="text"
             />
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
             name="synopsis"
-            label="Synopsis"
+            label="Name Customer"
             multiline
-            rows={5}
             variant="outlined"
             fullWidth
-            value={values?.synopsis}
+            value={values?.name_customer}
             onChange={(event: any) => {
-              onChangeAppState("synopsis", event.target.value);
+              onChangeAppState("name_customer", event.target.value);
             }}
           />
         </Grid>
         <DialogActions>
+         
           <Button variant="contained" color="error">
+          <Link href='/ticket'>
             Back
+            </Link>
           </Button>
           <Button type="submit" variant="contained">
             Edit

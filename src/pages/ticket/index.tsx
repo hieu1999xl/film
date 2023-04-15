@@ -20,17 +20,18 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Tooltip,
+  InputAdornment,
   Typography,
   DialogActions,
   DialogContent,
   DialogTitle,
   Paper,
   Box,
-  CircularProgress
+  FormControl
 } from '@mui/material';
+import ClearIcon from "@mui/icons-material/Clear";
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
-import CheckIcon from '@mui/icons-material/Check';
+import SearchIcon from "@mui/icons-material/Search";
 import Head from "next/head";
 import DeleteIcon from "@mui/icons-material/Delete";
 const Admin = () => {
@@ -42,7 +43,9 @@ const Admin = () => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const [idItem, setIdItem] = React.useState<any>();
   const [isLoading, setIsLoading] = React.useState(false);
-
+  const [showClearIcon, setShowClearIcon] = React.useState("none");
+  const [searchValue, setSearchValue] = React.useState("")
+  const [valueFilm, setValue] = React.useState<any>()
   const [numberTicket, setNumberTicket] = React.useState();
   const [nameFilm, setNameFilm] = React.useState();
   const [price, setPrice] = React.useState();
@@ -73,18 +76,25 @@ const Admin = () => {
       console.log('err', err);  
     })
   }
-  const getItemById = (id: number) => {
-    useGetMovieId(id).then((res) => {
-      setDataByID(res.data.data)
-    }).then((err) => {
-      console.log('err', err);
-    })
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setShowClearIcon(event.target.value === "" ? "none" : "flex");
+    setSearchValue(event.target.value)
+  };
  
+  const handleClick = (): void => {
+    // TODO: Clear the search input
+    setSearchValue('')
+    console.log("clicked the clear icon...");
+  };
+  React.useEffect(() => {
+    const newPacientes = movies && movies.filter((value: any) => value.code.toLowerCase().includes(searchValue.toLowerCase()))
+    setValue(newPacientes)
+  }, [searchValue])
 
   const getData = () => {
     setIsLoading(true)
     useGetTicketData().then((res: any)=> {
+      setValue(res.data.data)
       setMovies(res.data.data)
       setIsLoading(false)
     }).catch((err) => {
@@ -133,13 +143,39 @@ const Admin = () => {
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
+            // display="flex"
+            // alignItems="center"
+            // justifyContent="space-between"
           >
             <Box>
               <Typography variant="h3" component="h3" gutterBottom>
                 List Films
+                <Box sx={{ justifyContent: 'center', display: 'flex', paddingBottom: '16px' }}>
+            <FormControl>
+              <TextField
+                size="small"
+                variant="outlined"
+                onChange={(e:any) => handleChange(e)}
+                value={searchValue}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ display: showClearIcon }}
+                      onClick={handleClick}
+                    >
+                      <ClearIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          </Box>
               </Typography>
             </Box>
           </Box>
@@ -189,8 +225,8 @@ const Admin = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {movies &&
-                movies.map((row: any) => (
+              {valueFilm &&
+                valueFilm.map((row: any) => (
                   <TableRow
                     key={row.code}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -207,7 +243,7 @@ const Admin = () => {
                     <TableCell align="left">{row.showTime}</TableCell>
                     <TableCell align="left">
                       {" "}
-                      <Link href={`/admin/${row?.id}`}>
+                      <Link href={`/ticket/${row?.id}`}>
                       <IconButton onClick={() => editAction(row)}>
                         <EditIcon />
                       </IconButton>
@@ -247,9 +283,6 @@ const Admin = () => {
       <DialogContent>
         <Typography variant="h6">
           Are you sure you want to delete this item?
-        </Typography>
-        <Typography variant="subtitle2">
-          You can't undo this operation
         </Typography>
       </DialogContent>
       <DialogActions>

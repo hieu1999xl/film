@@ -53,3 +53,43 @@
   margin-top: -20px;
   font-size: 22px;
 }
+
+.movieTitle {
+  color: #4b4b4b;
+  font-weight: 700;
+  font-size: 19px;
+  text-align: center;
+}
+
+.movieLanguage {
+  color: #777;
+  font-weight: 700;
+  text-align: center;
+}
+
+.titleFilm {
+    font-size: 40px;
+    letter-spacing: 0;
+    line-height: 34px;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.listFilm {
+  padding-left: 0;
+}
+
+.listFilmItem {
+  list-style: none;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.listFilmItemContent {
+  text-transform: none;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 8px 0;
+}

@@ -69,8 +69,7 @@ export default function Home() {
     },
   ];
   const RenderMoviesList = () => {
-    console.log('valueFilm', valueFilm);
-    
+  
     if (valueFilm) {
       return valueFilm && valueFilm.map((movie: any) => (
         <Grid item xs={12} md={3} key={movie.id}>

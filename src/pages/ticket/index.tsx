@@ -1,6 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import { useGetMovieId, useDeleteMovie, useGetMovie, usePostMovie } from "../../services/movies";
+import { useGetMovieId, useDeleteTicket, useGetTicketData, usePostTicket } from "../../services/movies";
 import TableFooter from "@mui/material/TableFooter";
 import path from "path";
 import fs from "fs";
@@ -43,33 +43,30 @@ const Admin = () => {
   const [idItem, setIdItem] = React.useState<any>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [name, setName] = React.useState();
-  const [language, setLangua] = React.useState();
-  const [runtimes, setRuntimes] = React.useState();
-  const [description, setDescription] = React.useState();
-  const [type, setTypes] = React.useState();
+  const [numberTicket, setNumberTicket] = React.useState();
+  const [nameFilm, setNameFilm] = React.useState();
+  const [price, setPrice] = React.useState();
+  const [totalTicket, setTotalTicket] = React.useState();
+  const [totalPrice, setTotalPrice] = React.useState();
   const [cost, setCost] = React.useState();
-  const [file, setFilse] = React.useState();
-  const [synopsis, setSynopsis] = React.useState();
+  const [customer, setCustomer] = React.useState();
+  const [showTime, setShowTime] = React.useState();
 
   const [dataById, setDataByID] =  React.useState<any>();
-  console.log('dataById', dataById);
   
   const usePostData = () => {
     let params = {
-      name: name,
-      img: file,
-      language: language,
-      runtimes: runtimes,
-      descriptio: description,
-      synopsis: synopsis,
-      type: type,
+      code: `VPA${Math.random().toString().slice(2,11)}`,
+      number_tickets:numberTicket ,
+      name_firm: nameFilm,
+      price: price,
+      total_price: totalPrice,
+      total_ticket: totalTicket,
       ticketCost: cost,
-      rows: 20,
-      cols: 6,
-      seats: "{\"A\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"B\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"C\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"D\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"E\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"F\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"G\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"H\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"I\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],\"J\":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}"
+      name_customer: customer,
+      showTime: showTime,
     }
-    usePostMovie(params).then(() => {
+    usePostTicket(params).then(() => {
       setIsOpenCreate(false)
       getData()
     }).catch((err) => {
@@ -84,12 +81,10 @@ const Admin = () => {
     })
   }
  
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+
   const getData = () => {
     setIsLoading(true)
-    useGetMovie().then((res: any)=> {
+    useGetTicketData().then((res: any)=> {
       setMovies(res.data.data)
       setIsLoading(false)
     }).catch((err) => {
@@ -120,7 +115,7 @@ const Admin = () => {
     setIsOpenEdit(true)
   }
   const removeItem = () => {
-    useDeleteMovie(idItem).then((res) => {
+    useDeleteTicket(idItem).then((res) => {
       setIsOpen(false)
       getData()
     })
@@ -150,7 +145,7 @@ const Admin = () => {
           </Box>
         </Grid>
         <Grid item>
-          <Link href='/ticket'>
+          <Link href='/admin'>
           <Button
             sx={{
               mt: { xs: 2, sm: 0 },
@@ -160,10 +155,9 @@ const Admin = () => {
             variant="contained"
             color="secondary"
           >
-            List Ticket
+            List Film
           </Button>
           </Link>
-
             <Button
               sx={{
                 mt: { xs: 2, sm: 0 }
@@ -175,7 +169,7 @@ const Admin = () => {
               color="primary"
               onClick={() => setIsOpenCreate(true)}
             >
-              Add Film
+              Add Ticket
             </Button>
         </Grid>
       </Grid>
@@ -183,28 +177,34 @@ const Admin = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="left">Language</TableCell>
-                <TableCell align="left">Run times</TableCell>
-                <TableCell align="left">Type</TableCell>
+                <TableCell>Code</TableCell>
+                <TableCell align="left">Number Tickets</TableCell>
+                <TableCell align="left">Name Film</TableCell>
+                <TableCell align="left">Price</TableCell>
                 <TableCell align="left">Ticket Cost</TableCell>
-                <TableCell align="left">Actions</TableCell>
+                <TableCell align="left">Total Ticket</TableCell>
+                <TableCell align="left">Name Customer</TableCell>
+                <TableCell align="left">ShowTime</TableCell>
+                <TableCell align="left">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {movies &&
                 movies.map((row: any) => (
                   <TableRow
-                    key={row.name}
+                    key={row.code}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {row.code}
                     </TableCell>
-                    <TableCell align="left">{row.language}</TableCell>
-                    <TableCell align="left">{row.runtimes}</TableCell>
-                    <TableCell align="left">{row.type}</TableCell>
-                    <TableCell align="left">{row.ticketCost}</TableCell>
+                    <TableCell align="left">{row.number_tickets}</TableCell>
+                    <TableCell align="left">{row.name_firm}</TableCell>
+                    <TableCell align="left">{row.price}</TableCell>
+                    <TableCell align="left">{row.total_ticket}</TableCell>
+                    <TableCell align="left">{row.total_price}</TableCell>
+                    <TableCell align="left">{row.name_customer}</TableCell>
+                    <TableCell align="left">{row.showTime}</TableCell>
                     <TableCell align="left">
                       {" "}
                       <Link href={`/admin/${row?.id}`}>
@@ -268,7 +268,7 @@ const Admin = () => {
     >
       <DialogTitle>
         {" "}
-        <Typography variant="h4">Create New Film</Typography>
+        <Typography variant="h4">Create New Ticket</Typography>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -276,11 +276,11 @@ const Admin = () => {
             <TextField
               fullWidth
               name="name"
-              label='Name Film'
+              label='Number Tickets'
               variant="outlined"
               // value={productState?.sku}
               onChange={(event: any) => {
-                setName(event.target.value);
+                setNumberTicket(event.target.value);
               }}
               required
             />
@@ -291,11 +291,11 @@ const Admin = () => {
             <TextField
               fullWidth
               name="language"
-              label='Language'
+              label='Name Film'
               variant="outlined"
               // value={productState?.name}
                onChange={(event: any) => {
-                setLangua(event.target.value);
+                setNameFilm(event.target.value);
              }}
               // required
             />
@@ -304,11 +304,11 @@ const Admin = () => {
             <TextField
               fullWidth
               name="runtimes"
-              label='Run times'
+              label='Price'
               variant="outlined"
               // value={String(productState?.price)}
               onChange={(event: any) => {
-                setRuntimes(event.target.value);
+                setPrice(event.target.value);
               }}
               type="text"
               required
@@ -320,11 +320,11 @@ const Admin = () => {
             <TextField
               fullWidth
               name="description"
-              label='Description'
+              label='Total Ticket'
               variant="outlined"
               // value={productState?.name}
               onChange={(event: any) => {
-                setDescription(event.target.value);
+                setTotalTicket(event.target.value);
               }}
               required
             />
@@ -333,11 +333,11 @@ const Admin = () => {
             <TextField
               fullWidth
               name="type"
-              label='Type'
+              label='Total Price'
               variant="outlined"
               // value={String(productState?.price)}
               onChange={(event: any) => {
-                setTypes(event.target.value);
+                setTotalPrice(event.target.value);
               }}
               type="text"
               required
@@ -363,11 +363,11 @@ const Admin = () => {
               fullWidth
               name="synopsis"
               variant="outlined"
+              label='Customer'
               onChange={(event: any) => {
-                console.log(event.target.files[0]);
-                setFilse(event.target.files[0].name);
+                setCustomer(event.target.value);
               }}
-              type="file"
+              type="text"
               required
             />
           </Grid>
@@ -375,14 +375,13 @@ const Admin = () => {
         <Grid item xs={12}>
           <TextField
             name="synopsis"
-            label="Synopsis"
+            label="Show Time"
             multiline
-            rows={5}
             variant="outlined"
             fullWidth
             // value={productState?.description}
             onChange={(event: any) => {
-              setSynopsis(event.target.value);
+              setShowTime(event.target.value);
             }}
           />
         </Grid>

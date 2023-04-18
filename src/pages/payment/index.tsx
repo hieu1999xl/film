@@ -126,7 +126,7 @@ const Tickets = () => {
     };
     usePostTicket(params)
       .then(() => {
-        toast.success('🦄 Wow so easy!', {
+        toast.success(`You have successfully booked your movie ticket VPA${Math.random().toString().slice(2, 11)}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -136,8 +136,10 @@ const Tickets = () => {
           progress: undefined,
           theme: "light",
           });
-          
-        router.push("/");
+        setTimeout(()=> {
+          router.push("/");
+        }, 5000)
+        
       })
       .catch((err) => {
         console.log("err", err);
@@ -149,8 +151,8 @@ const Tickets = () => {
     usePostData();
     if (movieIndex !== -1) {
       movies[movieIndex].seats = modifiedSeatValue();
-      console.log(movies);
-      router.push("/");
+      // console.log(movies);
+      // router.push("/");
     }
   };
 
@@ -219,7 +221,7 @@ const Tickets = () => {
               />
             </Grid>
           </Grid>
-
+          <ToastContainer />
           <RenderConfirmButton />
         </div>
       </div>

@@ -2,7 +2,15 @@ import Head from "next/head";
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Grid, Container } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { useGetMovies } from "../../services/movies";
 import { Movie } from "../../constants/models/Movies";
 import styles from "./Details.module.scss";
@@ -47,6 +55,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     synopsis: "",
     type: "",
     ticketCost: "",
+    showTime: "",
     rows: "",
     cols: "",
     seats: "",
@@ -75,7 +84,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
       formData.append("rows", values.rows);
       formData.append("cols", values.cols);
       formData.append("seats", values.seats);
-       usePutMovieData(id, values)
+      usePutMovieData(id, values)
         .then(() => {
           router.push("/admin");
         })
@@ -88,13 +97,14 @@ const Details = ({ onSave }: IPageHeaderProps) => {
   useEffect(() => {
     setValues({
       name: movie?.name,
-      img: movie?.file,
+      img: movie?.img,
       language: movie?.language,
       runtimes: movie?.runtimes,
       description: movie?.description,
       synopsis: movie?.synopsis,
       type: movie?.type,
       ticketCost: movie?.ticketCost,
+      showTime: movie?.showTime,
       rows: "20",
       cols: "6",
       seats:
@@ -102,29 +112,6 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     });
   }, [movie]);
 
-  const usePutData = () => {
-    let params = {
-      name: name || movie.name,
-      img: file || movie.file,
-      language: language || movie.language,
-      runtimes: runtimes || movie.runtimes,
-      description: description || movie.description,
-      synopsis: synopsis || movie.synopsis,
-      type: type || movie.type,
-      ticketCost: cost || movie.ticketCost,
-      rows: 20,
-      cols: 6,
-      seats:
-        '{"A":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"B":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"C":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"D":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"E":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"F":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"G":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"H":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"I":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"J":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}',
-    };
-    usePutMovieData(id, params)
-      .then(() => {
-        router.push("/admin");
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
   const onChangeAppState = (key: string, value: any) => {
     setFieldValue(key, value);
   };
@@ -132,7 +119,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     <Container>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               fullWidth
               label="Name Film"
@@ -140,6 +127,18 @@ const Details = ({ onSave }: IPageHeaderProps) => {
               value={values?.name}
               onChange={(event: any) => {
                 onChangeAppState("name", event.target.value);
+              }}
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Show time"
+              variant="outlined"
+              value={values?.showTime}
+              onChange={(event: any) => {
+                onChangeAppState("showTime", event.target.value);
               }}
               required
             />
@@ -189,18 +188,21 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              fullWidth
-              name="type"
-              label="Type"
-              variant="outlined"
-              value={values?.type}
-              onChange={(event: any) => {
-                onChangeAppState("type", event.target.value);
-              }}
-              type="text"
-              required
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={values?.type}
+                label="Type Film"
+                onChange={(event: any) => {
+                  onChangeAppState("type", event.target.value);
+                }}
+              >
+                <MenuItem value={"hot"}>Hot Film</MenuItem>
+                <MenuItem value={"news"}>News Film</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -222,11 +224,12 @@ const Details = ({ onSave }: IPageHeaderProps) => {
               fullWidth
               name="synopsis"
               variant="outlined"
+              label="Images"
               value={values?.img}
               onChange={(event: any) => {
                 onChangeAppState("img", event.target.value);
               }}
-              type="file"
+              type="text"
             />
           </Grid>
         </Grid>
@@ -245,11 +248,8 @@ const Details = ({ onSave }: IPageHeaderProps) => {
           />
         </Grid>
         <DialogActions>
-          
           <Button variant="contained" color="error">
-          <Link href='/admin'>
-            Back
-            </Link>
+            <Link href="/admin">Back</Link>
           </Button>
           <Button type="submit" variant="contained">
             Edit

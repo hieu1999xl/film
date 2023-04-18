@@ -46,9 +46,29 @@ const Details = () => {
     );
   };
 
+  const RenderMoviesHotList = () => {
+    if (movies) {
+      return movies && movies.filter((i: any) => i.type === 'hot').slice(0, 4).map((movie: any) => (
+        <Grid item xs={12} md={3} key={movie.id}>
+          <Link href={`/details/${movie.id}`}>
+            <div>
+              <img src={movie.img} alt="site logo" width='100%' height={375} />
+              <div className={styles.movieTitle}> {movie.name} </div>
+              <div className={styles.movieLanguage}> {movie.language} </div>
+            </div>
+          </Link>
+        </Grid>
+      ));
+    } else if (isLoading) {
+      return <>Loading Movies...</>;
+    } else {
+      return <>No Movies To Watch...</>;
+    }
+  };
+
   const RenderMoviesList = () => {
     if (movies) {
-      return movies && movies.slice(0, 4).map((movie: any) => (
+      return movies && movies.filter((i: any) => i.type === 'news').slice(0, 4).map((movie: any) => (
         <Grid item xs={12} md={3} key={movie.id}>
           <Link href={`/details/${movie.id}`}>
             <div>
@@ -80,7 +100,7 @@ const Details = () => {
           <Grid item xs={12} ml={4} sm>
             <h1 className={styles.titleFilm}>{movie.name}</h1>
             <ul className={styles.listFilm}>
-              <li className={styles.listFilmItem}>Type:<p className={styles.listFilmItemContent}>{movie.type}</p></li>
+              <li className={styles.listFilmItem}>Show Times:<p className={styles.listFilmItemContent}>{movie.showTime}</p></li>
               <li className={styles.listFilmItem}>synopsis:<p className={styles.listFilmItemContent}>{movie.synopsis}</p></li>
               <li className={styles.listFilmItem}>Run Times:<p className={styles.listFilmItemContent}>{movie.runtimes}</p></li>
               <li className={styles.listFilmItem}><p>Ticket Cost: {movie.ticketCost}</p></li>
@@ -88,7 +108,11 @@ const Details = () => {
             <RenderBookTicketsButton />
           </Grid>
         </Grid>
-        <Box sx={{paddingTop: '40px'}}><h3 className={styles.title}>Recommended Movies</h3></Box>
+        <Box sx={{paddingTop: '40px'}}><h3 className={styles.title}>Special Movie</h3></Box>
+        <Grid container spacing={2}>
+          <RenderMoviesHotList />
+        </Grid>
+        <Box sx={{paddingTop: '40px'}}><h3 className={styles.title}>New Movie In Theaters</h3></Box>
         <Grid container spacing={2}>
       
           <RenderMoviesList />

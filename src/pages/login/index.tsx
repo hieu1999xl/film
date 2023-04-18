@@ -14,12 +14,12 @@ function Login() {
   // User Login info
   const database = [
     {
-      username: "user1",
-      password: "pass1"
+      username: "admin",
+      password: "Admin@123"
     },
     {
-      username: "user2",
-      password: "pass2"
+      username: "0986123456",
+      password: "Admin@123"
     }
   ];
 

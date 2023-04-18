@@ -5,6 +5,7 @@ import Link from "next/link";
 import Carousel from "react-material-ui-carousel";
 import styles from "../styles/Home.module.scss";
 import { useGetMovie } from "../services/movies";
+import Container from '@mui/material/Container';
 import { Movie } from "../constants/models/Movies";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -99,15 +100,16 @@ export default function Home() {
           <img width={'100%'} height={'auto'} key={item.name} src={item.image}/>
         ))}
       </Carousel>
-      <div className={styles.moviesContainer}>
+      <Container>
         <h1 className={styles.title}>Recommended Movies</h1>
-        <Box sx={{ justifyContent: 'center', display: 'flex', paddingBottom: '16px' }}>
+        <Box sx={{ justifyContent: 'left', display: 'flex', paddingBottom: '16px' }}>
             <FormControl>
               <TextField
                 size="small"
                 variant="outlined"
                 onChange={(e:any) => handleChange(e)}
                 value={searchValue}
+                placeholder="Search Film"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -130,7 +132,7 @@ export default function Home() {
         <Grid container spacing={2}>
           <RenderMoviesList />
         </Grid>
-      </div>
+      </Container>
     </>
   );
 }

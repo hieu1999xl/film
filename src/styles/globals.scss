@@ -23,6 +23,17 @@ nav {
   align-items: center;
   // border-bottom: 1px solid #ddd;
 }
+.seach_ticket {
+  display: flex;
+  align-items: center;
+}
+.search_input {
+  border-radius: none !important;
+}
+.button_search {
+  border-radius: none !important;
+  height: 40px;
+}
 nav a {
   margin-left: 20px;
 }

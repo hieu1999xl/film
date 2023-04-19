@@ -128,7 +128,7 @@ const Tickets = () => {
       .then(() => {
         toast.success(`You have successfully booked your movie ticket VPA${Math.random().toString().slice(2, 11)}`, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 10000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -138,7 +138,7 @@ const Tickets = () => {
           });
         setTimeout(()=> {
           router.push("/");
-        }, 5000)
+        }, 10000)
         
       })
       .catch((err) => {

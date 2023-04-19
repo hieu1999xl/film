@@ -82,15 +82,6 @@ const Admin = () => {
         console.log("err", err);
       });
   };
-  const getItemById = (id: number) => {
-    useGetMovieId(id)
-      .then((res) => {
-        setDataByID(res.data.data);
-      })
-      .then((err) => {
-        console.log("err", err);
-      });
-  };
 
   const getData = () => {
     setIsLoading(true);
@@ -135,7 +126,7 @@ const Admin = () => {
         </Head>
         <Container>
           <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
+          <Grid item sx={{paddingBottom: '10px', paddingTop: '10px'}}>
               <Box
                 display="flex"
                 alignItems="center"

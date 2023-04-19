@@ -1,6 +1,16 @@
 import Link from "next/link";
 import React, { FunctionComponent, useState, useEffect } from "react";
 import Image from "next/image";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
 import {
   FormControl,
   InputAdornment,
@@ -20,7 +30,39 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useGetTicketData } from "../services/movies";
 
+const pages = [
+  {
+    name: "Home",
+    link: '/'
+  },
+  {
+    name: "Admin",
+    link: '/admin'
+  },
+]
+
 const Navbar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -45,6 +87,12 @@ const Navbar = () => {
     setOpen(true);
   };
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      // 👇 Get input value
+      setOpen(true);
+    }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -64,18 +112,65 @@ const Navbar = () => {
   }, [open]);
   return (
     <>
-      <nav className="content">
-        <Link href="/">
-          <div className="logo">
-            <img src="/logo.png" alt="site logo" width={163} height={68} />
-          </div>
-        </Link>
-        <div className="seach_ticket">
-          <FormControl>
+      <AppBar sx={{backgroundColor: 'white', pb:'10px', pt: '10px'}} position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link href="/">
+              <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+                <div className="logo">
+                  <img
+                    src="/logo.png"
+                    alt="site logo"
+                    width={163}
+                    height={68}
+                  />
+                </div>
+              </Box>
+            </Link>
+
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon  sx={{color: 'blue'}}/>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" sx={{color:'black'}}> <Link href={page.link}>{page.name}</Link></Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <FormControl>
             <TextField
+             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
               size="small"
               variant="outlined"
               onChange={(e: any) => handleChange(e)}
+              onKeyDown={handleKeyDown}
               value={searchValue}
               className="search_input"
               placeholder="Search Ticket"
@@ -97,17 +192,54 @@ const Navbar = () => {
               }}
             />
           </FormControl>
-          <Button
-            className="button_search"
-            onClick={handleClickOpen}
-            variant="contained"
-          >
-            Search
-          </Button>
-          <Link href="/">Home</Link>
-          <Link href="/login">Login</Link>
-        </div>
-      </nav>
+       
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Link href={page.link}>
+                <Button
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+                </Link>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+            <FormControl>
+            <TextField
+             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+              size="small"
+              variant="outlined"
+              onChange={(e: any) => handleChange(e)}
+              onKeyDown={handleKeyDown}
+              value={searchValue}
+              className="search_input"
+              placeholder="Search Ticket"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment
+                    position="end"
+                    style={{ display: showClearIcon }}
+                    onClick={handleClick}
+                  >
+                    <ClearIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FormControl>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
       <Dialog
         open={open}
         maxWidth="md"
@@ -119,9 +251,8 @@ const Navbar = () => {
           {"Your ticket information"}
         </DialogTitle>
         <DialogContent>
-          {console.log('valueTicket', valueTicket)
-          }
-          {valueTicket && valueTicket.length >0
+          {console.log("valueTicket", valueTicket)}
+          {valueTicket && valueTicket.length > 0
             ? valueTicket &&
               valueTicket.map((i: any) => (
                 <>

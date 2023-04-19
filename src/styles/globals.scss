@@ -21,8 +21,30 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // border-bottom: 1px solid #ddd;
 }
+
+.box_top {
+  display: flex;
+  justify-content: end;
+}
+.banner_img {
+  max-height: 696px;
+}
+
+@media only screen and (min-width:280px) and (max-width:1280px) {
+  .content {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  nav {
+    flex-wrap: wrap;
+  }
+  .box_film {
+    text-align: center;
+  }
+}
+
+
 .seach_ticket {
   display: flex;
   align-items: center;

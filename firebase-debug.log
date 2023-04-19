@@ -1,0 +1,30 @@
+[debug] [2023-04-19T14:12:26.291Z] ----------------------------------------------------------------------
+[debug] [2023-04-19T14:12:26.293Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-04-19T14:12:26.293Z] CLI Version:   11.27.0
+[debug] [2023-04-19T14:12:26.293Z] Platform:      win32
+[debug] [2023-04-19T14:12:26.294Z] Node Version:  v18.15.0
+[debug] [2023-04-19T14:12:26.294Z] Time:          Wed Apr 19 2023 21:12:26 GMT+0700 (Indochina Time)
+[debug] [2023-04-19T14:12:26.294Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-19T14:12:26.358Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-19T14:12:26.359Z] > authorizing via signed-in user (hiu99xl@gmail.com)
+[debug] [2023-04-19T14:12:26.359Z] [iam] checking project cinemas-6dcee for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-19T14:12:26.360Z] > refreshing access token with scopes: []
+[debug] [2023-04-19T14:12:26.362Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-19T14:12:26.362Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-19T14:12:26.674Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-04-19T14:12:26.674Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-19T14:12:26.704Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemas-6dcee:testIamPermissions [none]
+[debug] [2023-04-19T14:12:26.704Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemas-6dcee:testIamPermissions x-goog-quota-user=projects/cinemas-6dcee
+[debug] [2023-04-19T14:12:26.705Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemas-6dcee:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-19T14:12:27.897Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemas-6dcee:testIamPermissions 200
+[debug] [2023-04-19T14:12:27.897Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemas-6dcee:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-19T14:12:27.900Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/cinemas-6dcee [none]
+[debug] [2023-04-19T14:12:28.456Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/cinemas-6dcee 200
+[debug] [2023-04-19T14:12:28.456Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/cinemas-6dcee {"projectId":"cinemas-6dcee","projectNumber":"180281421489","displayName":"cinemas","name":"projects/cinemas-6dcee","resources":{"hostingSite":"cinemas-6dcee"},"state":"ACTIVE","etag":"1_fc8de1f4-e9a3-481d-9ffe-6cbc633e0e9b"}
+[info] 
+[info] === Deploying to 'cinemas-6dcee'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-04-19T14:12:28.463Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/cinemas-6dcee/versions [none]
+[debug] [2023-04-19T14:12:28.463Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/cinemas-6dcee/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}

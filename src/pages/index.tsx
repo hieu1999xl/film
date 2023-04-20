@@ -85,20 +85,26 @@ export default function Home() {
   };
   const items = [
     {
-      name: "Random Name #1",
+      id: "slide-1",
+      name: "DUNGEONS & DRAGONS",
       description: "Probably the most random thing you have ever seen!",
+      url: "/details/9",
       image:
-        "https://assets-prd.ignimgs.com/2022/12/20/biggestmoviesin2023-yt-1671570902006.jpg",
+        "https://www.thecosmiccircus.com/wp-content/uploads/2023/03/Untitled-design-2.png",
     },
     {
-      name: "Random Name #2",
-      description: "Hello World!",
+      id: "slide-2",
+      name: "JOHN WICK: CHAPTER 4",
+      description: "JOHN WICK: CHAPTER 4",
+      url: "/details/2",
       image:
         "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7229d393-c3b8-4703-a41e-e876546d2612/dfpzzwa-06cfc6f0-84e7-4cc4-9b21-94673c86ce73.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcyMjlkMzkzLWMzYjgtNDcwMy1hNDFlLWU4NzY1NDZkMjYxMlwvZGZwenp3YS0wNmNmYzZmMC04NGU3LTRjYzQtOWIyMS05NDY3M2M4NmNlNzMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.u25-PnB_M6LoWhKs2d428nPdKqLAK2RHOXfZ6jE-KVU",
     },
     {
-      name: "Random Name #2",
+      id: "slide-3",
+      name: "THE SUPER MARIO BROS. MOVIE",
       description: "Hello World!",
+      url: "/details/1",
       image:
         "https://assets-in.bmscdn.com/discovery-catalog/events/et00311714-ntxvxqzsjq-landscape.jpg",
     },
@@ -196,13 +202,15 @@ export default function Home() {
       </Head>
       <Carousel>
         {items.map((item, i) => (
-          <img
-            width={"100%"}
-            height={"auto"}
-            className="banner_img"
-            key={item.name}
-            src={item.image}
-          />
+          <Link key={item.id} href={item.url}>
+            <img
+              width={"100%"}
+              height={"auto"}
+              className="banner_img"
+              key={item.name}
+              src={item.image}
+            />
+          </Link>
         ))}
       </Carousel>
       <Container>

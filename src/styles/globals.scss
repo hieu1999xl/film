@@ -30,6 +30,7 @@ nav {
 }
 .banner_img {
   max-height: 696px;
+  min-height: 696px;
 }
 
 .box_film:hover {
@@ -93,4 +94,11 @@ footer {
 }
 .not-found a{
   color: #4979ff;
+}
+
+@media only screen and  (max-width:500px) {
+
+  .banner_img {
+    min-height:auto
+  }
 }

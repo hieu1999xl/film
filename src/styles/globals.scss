@@ -26,6 +26,7 @@ nav {
 .box_top {
   display: flex;
   justify-content: end;
+  margin-top: 15px;
 }
 .banner_img {
   max-height: 696px;
@@ -41,7 +42,11 @@ nav {
 }
 .box_film:hover .Home_movieTitle__PxCja {
   color: orange;
-}.css-isbt42>.MuiGrid-item {
+}
+.box_film:hover .Details_movieTitle__BIq2b {
+  color: orange;
+}
+.css-isbt42>.MuiGrid-item {
   /* padding-left: 16px; */
   text-align: center;
   margin: 30px 0;

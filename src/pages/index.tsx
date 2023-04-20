@@ -171,7 +171,7 @@ export default function Home() {
       return (
         valueFilm &&
         valueFilm.map((movie: any) => (
-          <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
+          <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '15px'}}>
             <Link href={`/details/${movie.id}`}>
               <div className="box_film">
                 <img src={movie.img} alt="site logo" width={250} height={375} />
@@ -240,19 +240,19 @@ export default function Home() {
             />
           </FormControl>
         </Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
           <RenderMoviesList />
         </Grid>
-        <Box sx={{ paddingTop: "40px" }}>
+        <Box sx={{ paddingTop: "5px" }}>
           <h1 className={styles.title}>Special Movie</h1>
         </Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
           <RenderMoviesHotList />
         </Grid>
-        <Box sx={{ paddingTop: "40px" }}>
+        <Box sx={{ paddingTop: "5px" }}>
           <h1 className={styles.title}>New Movie In Theaters</h1>
         </Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
           <RenderMoviesListNews />
         </Grid>
         <Box className="box_top">

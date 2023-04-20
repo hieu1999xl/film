@@ -31,6 +31,28 @@ nav {
   max-height: 696px;
 }
 
+.box_film:hover {
+  /* color: orange; */
+  transform: scale(1.1);
+}
+.box_film {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  border-radius: 10px;
+}
+.box_film:hover .Home_movieTitle__PxCja {
+  color: orange;
+}.css-isbt42>.MuiGrid-item {
+  /* padding-left: 16px; */
+  text-align: center;
+  margin: 30px 0;
+  padding: 15px;
+}
+.box_film img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+
 @media only screen and (min-width:280px) and (max-width:1280px) {
   .content {
     max-width: 95%;
@@ -42,19 +64,6 @@ nav {
   .box_film {
     text-align: center;
   }
-}
-
-
-.seach_ticket {
-  display: flex;
-  align-items: center;
-}
-.search_input {
-  border-radius: none !important;
-}
-.button_search {
-  border-radius: none !important;
-  height: 40px;
 }
 nav a {
   margin-left: 20px;

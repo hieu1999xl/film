@@ -31,7 +31,6 @@ function Login() {
   const handleSubmit = (event:any) => {
     //Prevent page reload
     event.preventDefault();
-    router.push('/admin')
     var { uname, pass } = document.forms[0];
 
     // Find user login info
@@ -44,7 +43,7 @@ function Login() {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsSubmitted(true);
- 
+        router.push('/admin')
       }
     } else {
       // Username not found

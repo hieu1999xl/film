@@ -126,9 +126,10 @@ const Tickets = () => {
     };
     usePostTicket(params)
       .then(() => {
+        setSeconds(0)
         toast.success(`You have successfully booked your movie ticket VPA${Math.random().toString().slice(2, 11)}`, {
           position: "top-right",
-          autoClose: 10000,
+          autoClose: 6000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -138,7 +139,7 @@ const Tickets = () => {
           });
         setTimeout(()=> {
           router.push("/");
-        }, 10000)
+        }, 6000)
         
       })
       .catch((err) => {
@@ -161,7 +162,7 @@ const Tickets = () => {
       <div className={styles.paymentButtonContainer}>
         <Button
           variant="contained"
-          disabled={isTimerCompleted}
+          disabled={isTimerCompleted || !customer}
           className={styles.paymentButton}
           onClick={onConfirmButtonClick}
         >

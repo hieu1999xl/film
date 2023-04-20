@@ -105,16 +105,16 @@ export default function Home() {
   ];
 
   const RenderMoviesHotList = () => {
-    if (movies) {
+    if (movies  && movies.length >0) {
       return (
         movies &&
         movies
           .filter((i: any) => i.type === "hot")
           .slice(0, 4)
           .map((movie: any) => (
-            <Grid item xs={12} md={6} lg={3} key={movie.id}>
+            <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
               <Link href={`/details/${movie.id}`}>
-                <div>
+              <div className="box_film">
                   <img
                     src={movie.img}
                     alt="site logo"
@@ -129,23 +129,23 @@ export default function Home() {
           ))
       );
     } else if (isLoading) {
-      return <>Loading Movies...</>;
+      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>Loading Movies...</Box>;
     } else {
-      return <>No Movies To Watch...</>;
+      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
     }
   };
 
   const RenderMoviesListNews = () => {
-    if (movies) {
+    if (movies && movies.length >0) {
       return (
         movies &&
         movies
           .filter((i: any) => i.type === "news")
           .slice(0, 4)
           .map((movie: any) => (
-            <Grid item xs={12} md={6} lg={3} key={movie.id}>
+            <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
               <Link href={`/details/${movie.id}`}>
-                <div>
+              <div className="box_film">
                   <img
                     src={movie.img}
                     alt="site logo"
@@ -160,18 +160,18 @@ export default function Home() {
           ))
       );
     } else if (isLoading) {
-      return <>Loading Movies...</>;
+      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>Loading Movies...</Box>;
     } else {
-      return <>No Movies To Watch...</>;
+      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
     }
   };
 
   const RenderMoviesList = () => {
-    if (valueFilm) {
+    if (valueFilm && valueFilm.length >0) {
       return (
         valueFilm &&
         valueFilm.map((movie: any) => (
-          <Grid item xs={12} md={6} lg={3} key={movie.id}>
+          <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
             <Link href={`/details/${movie.id}`}>
               <div className="box_film">
                 <img src={movie.img} alt="site logo" width={250} height={375} />
@@ -185,7 +185,7 @@ export default function Home() {
     } else if (isLoading) {
       return <>Loading Movies...</>;
     } else {
-      return <>No Movies To Watch...</>;
+      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
     }
   };
 

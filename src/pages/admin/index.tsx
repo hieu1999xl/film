@@ -375,7 +375,7 @@ const Admin = () => {
                   name="synopsis"
                   variant="outlined"
                   onChange={(event: any) => {
-                    setFilse(event.target.files[0].name);
+                    setFilse(event.target.value);
                   }}
                   type="text"
                   required

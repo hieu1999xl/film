@@ -1,21 +1,16 @@
 import Link from "next/link";
-import React, { FunctionComponent, useState, useEffect } from "react";
-import Image from "next/image";
+import React, { useState, useEffect, useCallback  } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import {
   FormControl,
   InputAdornment,
   TextField,
-  createStyles,
   Box,
   Button,
   Grid,
@@ -36,8 +31,8 @@ const pages = [
     link: '/'
   },
   {
-    name: "Admin",
-    link: '/admin'
+    name: "Login",
+    link: '/login'
   },
 ]
 
@@ -45,27 +40,18 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
   const [showClearIcon, setShowClearIcon] = useState("none");
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = React.useState(false);
+
   const [valueTicket, setValueTicket] = useState<any>();
   const [tickets, setTickets] = useState<any>();
 
@@ -83,23 +69,12 @@ const Navbar = () => {
     getData();
   }, []);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
-      // 👇 Get input value
-      setOpen(true);
-    }
-  };
   const handleClose = () => {
     setOpen(false);
   };
   const handleClick = (): void => {
     // TODO: Clear the search input
     setSearchValue("");
-    console.log("clicked the clear icon...");
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setShowClearIcon(event.target.value === "" ? "none" : "flex");
@@ -110,8 +85,55 @@ const Navbar = () => {
       tickets && tickets.filter((i: any) => i.code === searchValue);
     setValueTicket(newTickket);
   }, [open]);
+
   return (
     <>
+         <Dialog
+        open={open}
+        maxWidth="md"
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Your ticket information"}
+        </DialogTitle>
+        <DialogContent>
+          {valueTicket && valueTicket.length > 0
+            ? valueTicket &&
+              valueTicket.map((i: any) => (
+                <>
+                  <Grid container spacing={2} xs={12} sx={{ mb: 2 }}>
+                    <Grid item xs={6}>
+                      Code: {i.code}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Number Tickets {i.number_tickets}{" "}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Name Film: {i.name_firm}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Name Customer: {i.name_customer}{" "}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Total Price: {i.total_price}{" "}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Total Tickets: {i.total_ticket}{" "}
+                    </Grid>
+                  </Grid>
+                </>
+              ))
+            : "Your ticket number is incorrect or does not exist, please re-enter the ticket number"}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       <AppBar sx={{backgroundColor: 'white', pb:'10px', pt: '10px'}} position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -127,7 +149,6 @@ const Navbar = () => {
                 </div>
               </Box>
             </Link>
-
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -170,7 +191,11 @@ const Navbar = () => {
               size="small"
               variant="outlined"
               onChange={(e: any) => handleChange(e)}
-              onKeyDown={handleKeyDown}
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  setOpen(true)
+                }
+              }}
               value={searchValue}
               className="search_input"
               placeholder="Search Ticket"
@@ -195,9 +220,8 @@ const Navbar = () => {
        
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <Link href={page.link}>
+                <Link key={page.name} href={page.link}>
                 <Button
-                  key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "black", display: "block" }}
                 >
@@ -214,7 +238,11 @@ const Navbar = () => {
               size="small"
               variant="outlined"
               onChange={(e: any) => handleChange(e)}
-              onKeyDown={handleKeyDown}
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  setOpen(true)
+                }
+              }}
               value={searchValue}
               className="search_input"
               placeholder="Search Ticket"
@@ -240,53 +268,6 @@ const Navbar = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Dialog
-        open={open}
-        maxWidth="md"
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Your ticket information"}
-        </DialogTitle>
-        <DialogContent>
-          {console.log("valueTicket", valueTicket)}
-          {valueTicket && valueTicket.length > 0
-            ? valueTicket &&
-              valueTicket.map((i: any) => (
-                <>
-                  <Grid container spacing={2} xs={12} sx={{ mb: 2 }}>
-                    <Grid item xs={6}>
-                      Code: {i.code}
-                    </Grid>
-                    <Grid item xs={6}>
-                      Number Tickets {i.number_tickets}{" "}
-                    </Grid>
-                    <Grid item xs={6}>
-                      Name Film: {i.name_firm}
-                    </Grid>
-                    <Grid item xs={6}>
-                      Name Customer: {i.name_customer}{" "}
-                    </Grid>
-                    <Grid item xs={6}>
-                      Total Price: {i.total_price}{" "}
-                    </Grid>
-                    <Grid item xs={6}>
-                      Total Tickets: {i.total_ticket}{" "}
-                    </Grid>
-                  </Grid>
-                </>
-              ))
-            : "Your ticket number is incorrect or does not exist, please re-enter the ticket number"}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };

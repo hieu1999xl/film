@@ -2,7 +2,7 @@
   justify-content: center;
   text-align: center;
   color: #545454;
-  margin-top: 2%;
+  margin: 9% 0
 }
 .card {
   background: #fff;
@@ -38,6 +38,10 @@
   background: #f84464 !important;
   margin-top: 30px !important;
   margin-bottom: 15px !important;
+}
+
+.paymentButton:hover {
+  background: #b1031d !important;
 }
 .paymentButton:disabled {
   background: #ff8a9f !important;

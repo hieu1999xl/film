@@ -39,6 +39,11 @@
 .paymentButton {
   background: #f84464 !important;
 }
+
+.paymentButton:focus {
+  background: #36010b !important;
+}
+
 .paymentButtonContainer {
   position: sticky;
   bottom: 10px;

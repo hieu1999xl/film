@@ -208,7 +208,7 @@ const Navbar = () => {
                 endAdornment: (
                   <InputAdornment
                     position="end"
-                    style={{ display: showClearIcon }}
+                    style={{ display: showClearIcon, cursor: 'pointer' }}
                     onClick={handleClick}
                   >
                     <ClearIcon />
@@ -255,7 +255,7 @@ const Navbar = () => {
                 endAdornment: (
                   <InputAdornment
                     position="end"
-                    style={{ display: showClearIcon }}
+                    style={{ display: showClearIcon, cursor: 'pointer' }}
                     onClick={handleClick}
                   >
                     <ClearIcon />

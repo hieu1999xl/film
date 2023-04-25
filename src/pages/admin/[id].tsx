@@ -116,7 +116,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     setFieldValue(key, value);
   };
   return (
-    <Container>
+    <Container sx={{mt: 16, mb: 15}}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid item xs={6}>

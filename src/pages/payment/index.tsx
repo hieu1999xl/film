@@ -139,7 +139,7 @@ const Tickets = () => {
           });
         setTimeout(()=> {
           router.push("/");
-        }, 6000)
+        },)
         
       })
       .catch((err) => {

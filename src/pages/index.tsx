@@ -111,22 +111,32 @@ export default function Home() {
   ];
 
   const RenderMoviesHotList = () => {
-    if (movies  && movies.length >0) {
+    if (movies && movies.length > 0) {
       return (
         movies &&
         movies
           .filter((i: any) => i.type === "hot")
           .slice(0, 4)
           .map((movie: any) => (
-            <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={3}
+              key={movie.id}
+              sx={{ padding: "15px", textAlign: "center", marginTop: "20px" }}
+            >
               <Link href={`/details/${movie.id}`}>
-              <div className="box_film">
-                  <img
-                    src={movie.img}
-                    alt="site logo"
-                    width="100%"
-                    height={375}
-                  />
+                <div className="box_film">
+                  <div className="box_img--film">
+                    <img
+                      className="img_film"
+                      src={movie.img}
+                      alt="site logo"
+                      width="100%"
+                      height={375}
+                    />
+                  </div>
                   <div className={styles.movieTitle}> {movie.name} </div>
                   <div className={styles.movieLanguage}> {movie.language} </div>
                 </div>
@@ -135,29 +145,47 @@ export default function Home() {
           ))
       );
     } else if (isLoading) {
-      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>Loading Movies...</Box>;
+      return (
+        <Box sx={{ paddingTop: "16px", paddingLeft: "16px" }}>
+          Loading Movies...
+        </Box>
+      );
     } else {
-      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
+      return (
+        <Box sx={{ paddingTop: "16px", paddingLeft: "16px" }}>
+          No Movies To Watch...
+        </Box>
+      );
     }
   };
 
   const RenderMoviesListNews = () => {
-    if (movies && movies.length >0) {
+    if (movies && movies.length > 0) {
       return (
         movies &&
         movies
           .filter((i: any) => i.type === "news")
           .slice(0, 4)
           .map((movie: any) => (
-            <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '20px'}}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={3}
+              key={movie.id}
+              sx={{ padding: "15px", textAlign: "center", marginTop: "20px" }}
+            >
               <Link href={`/details/${movie.id}`}>
-              <div className="box_film">
-                  <img
-                    src={movie.img}
-                    alt="site logo"
-                    width="100%"
-                    height={375}
-                  />
+                <div className="box_film">
+                  <div className="box_img--film">
+                    <img
+                      src={movie.img}
+                      className="img_film"
+                      alt="site logo"
+                      width="100%"
+                      height={375}
+                    />
+                  </div>
                   <div className={styles.movieTitle}> {movie.name} </div>
                   <div className={styles.movieLanguage}> {movie.language} </div>
                 </div>
@@ -166,21 +194,44 @@ export default function Home() {
           ))
       );
     } else if (isLoading) {
-      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>Loading Movies...</Box>;
+      return (
+        <Box sx={{ paddingTop: "16px", paddingLeft: "16px" }}>
+          Loading Movies...
+        </Box>
+      );
     } else {
-      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
+      return (
+        <Box sx={{ paddingTop: "16px", paddingLeft: "16px" }}>
+          No Movies To Watch...
+        </Box>
+      );
     }
   };
 
   const RenderMoviesList = () => {
-    if (valueFilm && valueFilm.length >0) {
+    if (valueFilm && valueFilm.length > 0) {
       return (
         valueFilm &&
         valueFilm.map((movie: any) => (
-          <Grid item xs={12} md={6} lg={3} key={movie.id} sx={{padding: '15px', textAlign: 'center', marginTop: '15px'}}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            lg={3}
+            key={movie.id}
+            sx={{ padding: "15px", textAlign: "center", marginTop: "15px" }}
+          >
             <Link href={`/details/${movie.id}`}>
               <div className="box_film">
-                <img src={movie.img} alt="site logo" width={250} height={375} />
+                <div className="box_img--film">
+                  <img
+                    src={movie.img}
+                    alt="site logo"
+                    width={250}
+                    height={375}
+                    className="img_film"
+                  />
+                </div>
                 <div className={styles.movieTitle}> {movie.name} </div>
                 <div className={styles.movieLanguage}> {movie.language} </div>
               </div>
@@ -191,7 +242,11 @@ export default function Home() {
     } else if (isLoading) {
       return <>Loading Movies...</>;
     } else {
-      return <Box sx={{paddingTop: '16px', paddingLeft: '16px'}}>No Movies To Watch...</Box>;
+      return (
+        <Box sx={{ paddingTop: "16px", paddingLeft: "16px" }}>
+          No Movies To Watch...
+        </Box>
+      );
     }
   };
 
@@ -248,30 +303,33 @@ export default function Home() {
             />
           </FormControl>
         </Box>
-        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
+        <Grid container spacing={2} sx={{ marginLeft: "0", width: "100%" }}>
           <RenderMoviesList />
         </Grid>
         <Box sx={{ paddingTop: "5px" }}>
           <h1 className={styles.title}>Special Movie</h1>
         </Box>
-        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
+        <Grid container spacing={2} sx={{ marginLeft: "0", width: "100%" }}>
           <RenderMoviesHotList />
         </Grid>
         <Box sx={{ paddingTop: "5px" }}>
           <h1 className={styles.title}>New Movie In Theaters</h1>
         </Box>
-        <Grid container spacing={2} sx={{marginLeft: "0", width: "100%"}}>
+        <Grid container spacing={2} sx={{ marginLeft: "0", width: "100%" }}>
           <RenderMoviesListNews />
         </Grid>
         <Box className="box_top">
-        <Button variant="contained"  onClick={scrollToTop} className="button_up">
-          <ArrowUpwardIcon
-            style={{ display: visible ? "inline" : "none", color: 'white' }}
-          />
-        </Button>
+          <Button
+            variant="contained"
+            onClick={scrollToTop}
+            className="button_up"
+          >
+            <ArrowUpwardIcon
+              style={{ display: visible ? "inline" : "none", color: "white" }}
+            />
+          </Button>
         </Box>
       </Container>
-      
     </>
   );
 }

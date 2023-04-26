@@ -9,18 +9,45 @@ import { Movie, Seats } from "../../constants/models/Movies";
 import styles from "./Payment.module.scss";
 import MoviesContext from "../../context/MoviesContext";
 import { useGetMovieId, usePostTicket } from "../../services/movies";
-import { useGetMovies } from "../../services/movies";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useGetMovie } from "../../services/movies";
+import { ToastContainer, toast } from "react-toastify";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import "react-toastify/dist/ReactToastify.css";
 const Tickets = () => {
-  const { movies, isLoading, isError } = useGetMovies();
   const router = useRouter();
   const [seconds, setSeconds] = useState(600);
   const [isTimerCompleted, setIsTimerCompleted] = useState(false);
   const [cost, setCost] = useState();
   const [customer, setCustomer] = useState();
-
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
   const [selectItem, setSelectItem] = useState<any>();
+  const [item, setItem] = useState<any>();
+  const [movies, setMovies] = useState<any>([]);
+
+  const getData = () => {
+    useGetMovie()
+      .then((res: any) => {
+        setMovies(res.data.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  };
 
   let movieSeatDetails: Seats = {};
   let bookingChargePerTicket = 0,
@@ -55,6 +82,7 @@ const Tickets = () => {
   };
 
   useEffect(() => {
+    getData()
     setSelectItem(selectedSeats);
   }, []);
 
@@ -121,26 +149,27 @@ const Tickets = () => {
       price: movie.ticketCost,
       total_price: ticketCost + bookingFee,
       total_ticket: selectItem.length,
-      name_customer: customer ,
-      showTime: movie.showTime || '2h',
+      name_customer: customer,
+      showTime: movie.showTime || "2h",
     };
+    setItem(params);
     usePostTicket(params)
       .then(() => {
-        setSeconds(0)
-        toast.success(`You have successfully booked your movie ticket VPA${Math.random().toString().slice(2, 11)}`, {
-          position: "top-right",
-          autoClose: 6000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
-        setTimeout(()=> {
-          router.push("/");
-        },)
-        
+        setSeconds(0);
+        toast.success(
+          `You have successfully booked your movie ticket VPA${params.code}`,
+          {
+            position: "top-right",
+            autoClose: 6000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+        setOpen(true);
       })
       .catch((err) => {
         console.log("err", err);
@@ -226,6 +255,57 @@ const Tickets = () => {
           <RenderConfirmButton />
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div style={{textAlign: 'center'}} className={styles.cardTitleContainer}>
+            <div className={styles.cardTitle}>Movie ticket information</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Name Cusomer</div>
+            <div className={styles.seatCost}>{item?.name_customer}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Code</div>
+            <div className={styles.seatCost}>{item?.code}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Number Ticket</div>
+            <div className={styles.seatCost}>{item?.number_tickets}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Name Film</div>
+            <div className={styles.seatCost}>{item?.name_firm}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Total Ticket</div>
+            <div className={styles.seatCost}>{item?.total_ticket}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Show Time</div>
+            <div className={styles.seatCost}>{item?.showTime}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+        <div className={styles.seatDetails}>Total</div>
+        <div className={styles.seatCost}>{item?.total_price}$</div>
+      </div>
+          <div style={{textAlign: 'center'}} className={styles.paymentButtonContainer}>
+            <Link href="/">
+              <Button
+                variant="contained"
+                className={styles.paymentButton}
+                onClick={onConfirmButtonClick}
+              >
+                Come Back Home
+              </Button>
+            </Link>
+          </div>
+        </Box>
+      </Modal>
     </>
   );
 };

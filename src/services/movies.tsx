@@ -19,7 +19,7 @@ function useGetMovies() {
 function useGetTicket() {
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(
-    `hhttps://testapi.io/api/movies/resource/tickets`,
+    `https://testapi.io/api/movies/resource/tickets`,
     fetcher
   );
 

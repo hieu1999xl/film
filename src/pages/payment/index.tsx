@@ -8,12 +8,18 @@ import { Grid, TextField } from "@mui/material";
 import { Movie, Seats } from "../../constants/models/Movies";
 import styles from "./Payment.module.scss";
 import MoviesContext from "../../context/MoviesContext";
-import { useGetMovieId, usePostTicket } from "../../services/movies";
+import { useGetMovieId, usePostTicket, useGetTicketData } from "../../services/movies";
 import { useGetMovie } from "../../services/movies";
 import { ToastContainer, toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import {
+  Select,
+  InputLabel,
+  FormControl,
+  MenuItem
+} from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 const Tickets = () => {
   const router = useRouter();
@@ -26,6 +32,8 @@ const Tickets = () => {
   const [selectItem, setSelectItem] = useState<any>();
   const [item, setItem] = useState<any>();
   const [movies, setMovies] = useState<any>([]);
+  const [theater, setTheater] = useState();
+
 
   const getData = () => {
     useGetMovie()
@@ -151,6 +159,7 @@ const Tickets = () => {
       total_ticket: selectItem.length,
       name_customer: customer,
       showTime: movie.showTime || "2h",
+      movie_theater: theater
     };
     setItem(params);
     usePostTicket(params)
@@ -250,6 +259,24 @@ const Tickets = () => {
                 required
               />
             </Grid>
+            <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={theater}
+                    label="Type Film"
+                    onChange={(event: any) => {
+                      setTheater(event.target.value);
+                    }}
+                  >
+                    <MenuItem value={'Beta Cinemas 01'}>Beta Cinemas 01</MenuItem>
+                    <MenuItem value={'Beta Cinemas 02'}>Beta Cinemas 02</MenuItem>
+                    <MenuItem value={'Beta Cinemas 03'}>Beta Cinemas 03</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
           </Grid>
           <ToastContainer />
           <RenderConfirmButton />
@@ -282,8 +309,12 @@ const Tickets = () => {
             <div className={styles.seatCost}>{item?.name_firm}</div>
           </div>
           <div className={styles.seatDetailsContainer}>
-            <div className={styles.seatDetails}>Total Ticket</div>
-            <div className={styles.seatCost}>{item?.total_ticket}</div>
+            <div className={styles.seatDetails}>Name Film</div>
+            <div className={styles.seatCost}>{item?.name_firm}</div>
+          </div>
+          <div className={styles.seatDetailsContainer}>
+            <div className={styles.seatDetails}>Movie Theater</div>
+            <div className={styles.seatCost}>{item?.movie_theater}</div>
           </div>
           <div className={styles.seatDetailsContainer}>
             <div className={styles.seatDetails}>Show Time</div>
@@ -298,7 +329,7 @@ const Tickets = () => {
               <Button
                 variant="contained"
                 className={styles.paymentButton}
-                onClick={onConfirmButtonClick}
+                onClick={() => router.push('/', null, { shallow: false })}
               >
                 Come Back Home
               </Button>

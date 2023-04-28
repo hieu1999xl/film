@@ -33,6 +33,9 @@ import {
   Paper,
   Box,
   FormControl,
+  InputLabel,
+  MenuItem, 
+  Select 
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
@@ -59,6 +62,8 @@ const Admin = () => {
   const [cost, setCost] = React.useState();
   const [customer, setCustomer] = React.useState();
   const [showTime, setShowTime] = React.useState();
+  const [theater, setTheater] = React.useState();
+
 
   const [dataById, setDataByID] = React.useState<any>();
 
@@ -73,6 +78,7 @@ const Admin = () => {
       ticketCost: cost,
       name_customer: customer,
       showTime: showTime,
+      movie_theater: theater
     };
     usePostTicket(params)
       .then(() => {
@@ -225,11 +231,11 @@ const Admin = () => {
                   <TableCell>Code</TableCell>
                   <TableCell align="left">Number Tickets</TableCell>
                   <TableCell align="left">Name Film</TableCell>
-                  <TableCell align="left">Price</TableCell>
                   <TableCell align="left">Ticket Cost</TableCell>
                   <TableCell align="left">Total Ticket</TableCell>
                   <TableCell align="left">Name Customer</TableCell>
                   <TableCell align="left">ShowTime</TableCell>
+                  <TableCell align="left">Movie Theater</TableCell>
                   <TableCell align="left">Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -245,11 +251,11 @@ const Admin = () => {
                       </TableCell>
                       <TableCell align="left">{row.number_tickets}</TableCell>
                       <TableCell align="left">{row.name_firm}</TableCell>
-                      <TableCell align="left">{row.price}</TableCell>
                       <TableCell align="left">{row.total_ticket}</TableCell>
                       <TableCell align="left">{row.total_price}</TableCell>
                       <TableCell align="left">{row.name_customer}</TableCell>
                       <TableCell align="left">{row.showTime}</TableCell>
+                      <TableCell align="left">{row.movie_theater}</TableCell>
                       <TableCell align="left">
                         {" "}
                         <Link href={`/ticket/${row?.id}`}>
@@ -433,6 +439,24 @@ const Admin = () => {
                 }}
               />
             </Grid>
+            <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={theater}
+                    label="Type Film"
+                    onChange={(event: any) => {
+                      setTheater(event.target.value);
+                    }}
+                  >
+                    <MenuItem value={'Beta Cinemas 01'}>Beta Cinemas 01</MenuItem>
+                    <MenuItem value={'Beta Cinemas 02'}>Beta Cinemas 02</MenuItem>
+                    <MenuItem value={'Beta Cinemas 03'}>Beta Cinemas 03</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
           </DialogContent>
           <DialogActions>
             <Button

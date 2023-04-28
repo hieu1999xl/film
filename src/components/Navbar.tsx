@@ -23,7 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useGetTicketData } from "../services/movies";
+import { useGetTicketData, useGetTicket } from "../services/movies";
 
 const pages = [
   {
@@ -54,6 +54,7 @@ const Navbar = () => {
 
   const [valueTicket, setValueTicket] = useState<any>();
   const [tickets, setTickets] = useState<any>();
+console.log('tickets', tickets);
 
   const getData = () => {
     useGetTicketData()
@@ -67,7 +68,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchValue]);
 
   const handleClose = () => {
     setOpen(false);
@@ -201,7 +202,7 @@ const Navbar = () => {
               placeholder="Search Ticket"
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment  onClick={() => setOpen(true)} style={{  cursor: 'pointer' }} position="start">
                     <SearchIcon />
                   </InputAdornment>
                 ),
@@ -248,7 +249,7 @@ const Navbar = () => {
               placeholder="Search Ticket"
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment onClick={() => setOpen(true)} style={{  cursor: 'pointer' }} position="start">
                     <SearchIcon />
                   </InputAdornment>
                 ),

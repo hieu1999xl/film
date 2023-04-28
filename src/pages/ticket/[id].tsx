@@ -7,7 +7,7 @@ import { useGetTicket } from "../../services/movies";
 import { useEffect } from "react";
 import { useFormik } from "formik";
 import { usePutTicketData } from "../../services/movies";
-import { TextField, DialogActions, Box } from "@mui/material";
+import { TextField, DialogActions, Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 interface IPageHeaderProps {
   onSave: () => void;
 }
@@ -28,6 +28,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     name_customer: "",
     ticketCost: "",
     showTime: "",
+    movie_theater: ""
   };
 
   const {
@@ -50,6 +51,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
       formData.append("total_ticket", values.total_ticket);
       formData.append("name_customer", values.name_customer);
       formData.append("showTime", values.showTime);
+      formData.append("movie_theater", values.movie_theater);
 
       usePutTicketData(id, values)
         .then(() => {
@@ -72,6 +74,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
       name_customer: ticket?.name_customer,
       ticketCost: ticket?.ticketCost,
       showTime: ticket?.showTime,
+      movie_theater: ticket?.movie_theater
     });
   }, [ticket]);
 
@@ -211,6 +214,24 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             }}
           />
         </Grid>
+        <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values?.movie_theater}
+                    label="Type Film"
+                    onChange={(event: any) => {
+                      onChangeAppState("movie_theater", event.target.value);
+                    }}
+                  >
+                    <MenuItem value={'Beta Cinemas 01'}>Beta Cinemas 01</MenuItem>
+                    <MenuItem value={'Beta Cinemas 02'}>Beta Cinemas 02</MenuItem>
+                    <MenuItem value={'Beta Cinemas 03'}>Beta Cinemas 03</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
         <DialogActions>
          
           <Button variant="contained" color="error">

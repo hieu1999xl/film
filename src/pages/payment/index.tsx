@@ -261,8 +261,9 @@ const Tickets = () => {
             </Grid>
             <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel id="demo-simple-select-label">Movie Theater</InputLabel>
                   <Select
+                  sx={{textAlign: "left"}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={theater}
@@ -329,7 +330,7 @@ const Tickets = () => {
               <Button
                 variant="contained"
                 className={styles.paymentButton}
-                onClick={() => router.push('/', null, { shallow: false })}
+                onClick={() => router.push('/')}
               >
                 Come Back Home
               </Button>

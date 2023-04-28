@@ -83,7 +83,7 @@ console.log('tickets', tickets);
   };
   useEffect(() => {
     const newTickket =
-      tickets && tickets.filter((i: any) => i.code === searchValue);
+      tickets && tickets.filter((i: any) => i.code.toLowerCase() === searchValue.toLowerCase());
     setValueTicket(newTickket);
   }, [open]);
 
@@ -109,7 +109,10 @@ console.log('tickets', tickets);
                       Code: {i.code}
                     </Grid>
                     <Grid item xs={6}>
-                      Number Tickets {i.number_tickets}{" "}
+                      Movie Theater: {i.movie_theater}
+                    </Grid>
+                    <Grid item xs={6}>
+                      Number Tickets: {i.number_tickets}{" "}
                     </Grid>
                     <Grid item xs={6}>
                       Name Film: {i.name_firm}

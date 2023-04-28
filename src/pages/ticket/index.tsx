@@ -426,7 +426,7 @@ const Admin = () => {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ mb: 2 }}>
               <TextField
                 name="synopsis"
                 label="Show Time"

@@ -33,6 +33,7 @@ const Tickets = () => {
   const [item, setItem] = useState<any>();
   const [movies, setMovies] = useState<any>([]);
   const [theater, setTheater] = useState();
+  const [showTime, setShowTime] = useState();
 
 
   const getData = () => {
@@ -158,7 +159,7 @@ const Tickets = () => {
       total_price: ticketCost + bookingFee,
       total_ticket: selectItem.length,
       name_customer: customer,
-      showTime: movie.showTime || "2h",
+      showTime: showTime,
       movie_theater: theater
     };
     setItem(params);
@@ -278,6 +279,32 @@ const Tickets = () => {
                   </Select>
                 </FormControl>
               </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Show Time</InputLabel>
+                  <Select
+                  sx={{textAlign: "left"}}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={theater}
+                    label="Type Film"
+                    onChange={(event: any) => {
+                      setShowTime(event.target.value);
+                    }}
+                  >
+                    <MenuItem value={'9:00 AM'}>9:00 AM</MenuItem>
+                    <MenuItem value={'9:30 AM'}>9:30 AM</MenuItem>
+                    <MenuItem value={'11:00 AM'}>11:00 AM</MenuItem>
+                    <MenuItem value={'1:00 PM'}>1:00 PM</MenuItem>
+                    <MenuItem value={'2:00 PM'}>2:00 PM</MenuItem>
+                    <MenuItem value={'3:00 PM'}>3:00 PM</MenuItem>
+                    <MenuItem value={'4:00 PM'}>4:00 PM</MenuItem>
+                    <MenuItem value={'8:00 PM'}>8:00 PM</MenuItem>
+                    <MenuItem value={'9:00 PM'}>9:00 PM</MenuItem>
+                    <MenuItem value={'10:00 PM'}>10:00 PM</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
           </Grid>
           <ToastContainer />
           <RenderConfirmButton />
@@ -306,8 +333,8 @@ const Tickets = () => {
             <div className={styles.seatCost}>{item?.number_tickets}</div>
           </div>
           <div className={styles.seatDetailsContainer}>
-            <div className={styles.seatDetails}>Name Film</div>
-            <div className={styles.seatCost}>{item?.name_firm}</div>
+            <div className={styles.seatDetails}>Movie Theater</div>
+            <div className={styles.seatCost}>{item?.movie_theater}</div>
           </div>
           <div className={styles.seatDetailsContainer}>
             <div className={styles.seatDetails}>Name Film</div>

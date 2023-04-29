@@ -188,18 +188,31 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              fullWidth
-              name="synopsis"
-              variant="outlined"
-              label="Show Time"
-              value={values?.showTime}
-              onChange={(event: any) => {
-                onChangeAppState("showTime", event.target.value);
-              }}
-              type="text"
-            />
-          </Grid>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Show Time</InputLabel>
+                  <Select
+                  sx={{textAlign: "left"}}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values?.showTime}
+                    label="Type Film"
+                    onChange={(event: any) => {
+                      onChangeAppState("showTime", event.target.value);
+                    }}
+                  >
+                    <MenuItem value={'9:00 AM'}>9:00 AM</MenuItem>
+                    <MenuItem value={'9:30 AM'}>9:30 AM</MenuItem>
+                    <MenuItem value={'11:00 AM'}>11:00 AM</MenuItem>
+                    <MenuItem value={'1:00 PM'}>1:00 PM</MenuItem>
+                    <MenuItem value={'2:00 PM'}>2:00 PM</MenuItem>
+                    <MenuItem value={'3:00 PM'}>3:00 PM</MenuItem>
+                    <MenuItem value={'4:00 PM'}>4:00 PM</MenuItem>
+                    <MenuItem value={'8:00 PM'}>8:00 PM</MenuItem>
+                    <MenuItem value={'9:00 PM'}>9:00 PM</MenuItem>
+                    <MenuItem value={'Be10:00 PM'}>10:00 PM</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField

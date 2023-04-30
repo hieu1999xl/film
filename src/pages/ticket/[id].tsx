@@ -7,16 +7,24 @@ import { useGetTicket } from "../../services/movies";
 import { useEffect } from "react";
 import { useFormik } from "formik";
 import { usePutTicketData } from "../../services/movies";
-import { TextField, DialogActions, Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  TextField,
+  DialogActions,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 interface IPageHeaderProps {
   onSave: () => void;
 }
 const Details = ({ onSave }: IPageHeaderProps) => {
-
   const { tickets, isLoading, isError } = useGetTicket();
   const router = useRouter();
   const { id }: any = router.query;
-  const ticket = tickets && tickets?.find((mov: any) => mov.id === parseInt(id));
+  const ticket =
+    tickets && tickets?.find((mov: any) => mov.id === parseInt(id));
 
   let DEFAULT_APP = {
     code: "",
@@ -28,7 +36,7 @@ const Details = ({ onSave }: IPageHeaderProps) => {
     name_customer: "",
     ticketCost: "",
     showTime: "",
-    movie_theater: ""
+    movie_theater: "",
   };
 
   const {
@@ -74,16 +82,15 @@ const Details = ({ onSave }: IPageHeaderProps) => {
       name_customer: ticket?.name_customer,
       ticketCost: ticket?.ticketCost,
       showTime: ticket?.showTime,
-      movie_theater: ticket?.movie_theater
+      movie_theater: ticket?.movie_theater,
     });
   }, [ticket]);
-
 
   const onChangeAppState = (key: string, value: any) => {
     setFieldValue(key, value);
   };
   return (
-    <Container>
+    <Container sx={{ mt: 5 }}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid item xs={6}>
@@ -165,8 +172,8 @@ const Details = ({ onSave }: IPageHeaderProps) => {
               variant="outlined"
               value={values?.total_ticket}
               onChange={(event: any) => {
-                console.log('e', event);
-                
+                console.log("e", event);
+
                 onChangeAppState("total_ticket", event.target.value);
               }}
               type="text"
@@ -188,69 +195,70 @@ const Details = ({ onSave }: IPageHeaderProps) => {
             />
           </Grid>
           <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Show Time</InputLabel>
-                  <Select
-                  sx={{textAlign: "left"}}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={values?.showTime}
-                    label="Type Film"
-                    onChange={(event: any) => {
-                      onChangeAppState("showTime", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={'9:00 AM'}>9:00 AM</MenuItem>
-                    <MenuItem value={'9:30 AM'}>9:30 AM</MenuItem>
-                    <MenuItem value={'11:00 AM'}>11:00 AM</MenuItem>
-                    <MenuItem value={'1:00 PM'}>1:00 PM</MenuItem>
-                    <MenuItem value={'2:00 PM'}>2:00 PM</MenuItem>
-                    <MenuItem value={'3:00 PM'}>3:00 PM</MenuItem>
-                    <MenuItem value={'4:00 PM'}>4:00 PM</MenuItem>
-                    <MenuItem value={'8:00 PM'}>8:00 PM</MenuItem>
-                    <MenuItem value={'9:00 PM'}>9:00 PM</MenuItem>
-                    <MenuItem value={'Be10:00 PM'}>10:00 PM</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+            <TextField
+              name="synopsis"
+              label="Name Customer"
+              multiline
+              variant="outlined"
+              fullWidth
+              value={values?.name_customer}
+              onChange={(event: any) => {
+                onChangeAppState("name_customer", event.target.value);
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            name="synopsis"
-            label="Name Customer"
-            multiline
-            variant="outlined"
-            fullWidth
-            value={values?.name_customer}
-            onChange={(event: any) => {
-              onChangeAppState("name_customer", event.target.value);
-            }}
-          />
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={6} sx={{ mb: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Show Time</InputLabel>
+              <Select
+                sx={{ textAlign: "left" }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={values?.showTime}
+                label="Type Film"
+                onChange={(event: any) => {
+                  onChangeAppState("showTime", event.target.value);
+                }}
+              >
+                <MenuItem value={"9:00 AM"}>9:00 AM</MenuItem>
+                <MenuItem value={"9:30 AM"}>9:30 AM</MenuItem>
+                <MenuItem value={"11:00 AM"}>11:00 AM</MenuItem>
+                <MenuItem value={"1:00 PM"}>1:00 PM</MenuItem>
+                <MenuItem value={"2:00 PM"}>2:00 PM</MenuItem>
+                <MenuItem value={"3:00 PM"}>3:00 PM</MenuItem>
+                <MenuItem value={"4:00 PM"}>4:00 PM</MenuItem>
+                <MenuItem value={"8:00 PM"}>8:00 PM</MenuItem>
+                <MenuItem value={"9:00 PM"}>9:00 PM</MenuItem>
+                <MenuItem value={"Be10:00 PM"}>10:00 PM</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6} sx={{ mb: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Movie Theater
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={values?.movie_theater}
+                label="Movie Theater"
+                onChange={(event: any) => {
+                  onChangeAppState("movie_theater", event.target.value);
+                }}
+              >
+                <MenuItem value={"Beta Cinemas 01"}>Beta Cinemas 01</MenuItem>
+                <MenuItem value={"Beta Cinemas 02"}>Beta Cinemas 02</MenuItem>
+                <MenuItem value={"Beta Cinemas 03"}>Beta Cinemas 03</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={values?.movie_theater}
-                    label="Type Film"
-                    onChange={(event: any) => {
-                      onChangeAppState("movie_theater", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={'Beta Cinemas 01'}>Beta Cinemas 01</MenuItem>
-                    <MenuItem value={'Beta Cinemas 02'}>Beta Cinemas 02</MenuItem>
-                    <MenuItem value={'Beta Cinemas 03'}>Beta Cinemas 03</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
         <DialogActions>
-         
           <Button variant="contained" color="error">
-          <Link href='/ticket'>
-            Back
-            </Link>
+            <Link href="/ticket">Back</Link>
           </Button>
           <Button type="submit" variant="contained">
             Edit

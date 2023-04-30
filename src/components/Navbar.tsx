@@ -79,7 +79,8 @@ console.log('tickets', tickets);
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setShowClearIcon(event.target.value === "" ? "none" : "flex");
-    setSearchValue(event.target.value);
+    const value = event.target.value.trim()
+    setSearchValue(value);
   };
   useEffect(() => {
     const newTickket =

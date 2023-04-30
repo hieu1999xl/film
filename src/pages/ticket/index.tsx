@@ -34,8 +34,8 @@ import {
   Box,
   FormControl,
   InputLabel,
-  MenuItem, 
-  Select 
+  MenuItem,
+  Select,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
@@ -64,7 +64,6 @@ const Admin = () => {
   const [showTime, setShowTime] = React.useState();
   const [theater, setTheater] = React.useState();
 
-
   const [dataById, setDataByID] = React.useState<any>();
 
   const usePostData = () => {
@@ -78,7 +77,7 @@ const Admin = () => {
       ticketCost: cost,
       name_customer: customer,
       showTime: showTime,
-      movie_theater: theater
+      movie_theater: theater,
     };
     usePostTicket(params)
       .then(() => {
@@ -152,7 +151,7 @@ const Admin = () => {
         </Head>
         <Container>
           <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item sx={{paddingBottom: '10px', paddingTop: '10px'}}>
+            <Grid item sx={{ paddingBottom: "10px", paddingTop: "10px" }}>
               <Box
               // display="flex"
               // alignItems="center"
@@ -426,11 +425,14 @@ const Admin = () => {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Show Time</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Show Time
+                  </InputLabel>
                   <Select
-                  sx={{textAlign: "left"}}
+                    sx={{ textAlign: "left" }}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={showTime}
@@ -439,37 +441,46 @@ const Admin = () => {
                       setShowTime(event.target.value);
                     }}
                   >
-                    <MenuItem value={'9:00 AM'}>9:00 AM</MenuItem>
-                    <MenuItem value={'9:30 AM'}>9:30 AM</MenuItem>
-                    <MenuItem value={'11:00 AM'}>11:00 AM</MenuItem>
-                    <MenuItem value={'1:00 PM'}>1:00 PM</MenuItem>
-                    <MenuItem value={'2:00 PM'}>2:00 PM</MenuItem>
-                    <MenuItem value={'3:00 PM'}>3:00 PM</MenuItem>
-                    <MenuItem value={'4:00 PM'}>4:00 PM</MenuItem>
-                    <MenuItem value={'8:00 PM'}>8:00 PM</MenuItem>
-                    <MenuItem value={'9:00 PM'}>9:00 PM</MenuItem>
-                    <MenuItem value={'Be10:00 PM'}>10:00 PM</MenuItem>
+                    <MenuItem value={"9:00 AM"}>9:00 AM</MenuItem>
+                    <MenuItem value={"9:30 AM"}>9:30 AM</MenuItem>
+                    <MenuItem value={"11:00 AM"}>11:00 AM</MenuItem>
+                    <MenuItem value={"1:00 PM"}>1:00 PM</MenuItem>
+                    <MenuItem value={"2:00 PM"}>2:00 PM</MenuItem>
+                    <MenuItem value={"3:00 PM"}>3:00 PM</MenuItem>
+                    <MenuItem value={"4:00 PM"}>4:00 PM</MenuItem>
+                    <MenuItem value={"8:00 PM"}>8:00 PM</MenuItem>
+                    <MenuItem value={"9:00 PM"}>9:00 PM</MenuItem>
+                    <MenuItem value={"Be10:00 PM"}>10:00 PM</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
-            <Grid item xs={12}>
+              <Grid item xs={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Movie Theater
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={theater}
-                    label="Type Film"
+                    label="Movie Theater"
                     onChange={(event: any) => {
                       setTheater(event.target.value);
                     }}
                   >
-                    <MenuItem value={'Beta Cinemas 01'}>Beta Cinemas 01</MenuItem>
-                    <MenuItem value={'Beta Cinemas 02'}>Beta Cinemas 02</MenuItem>
-                    <MenuItem value={'Beta Cinemas 03'}>Beta Cinemas 03</MenuItem>
+                    <MenuItem value={"Beta Cinemas 01"}>
+                      Beta Cinemas 01
+                    </MenuItem>
+                    <MenuItem value={"Beta Cinemas 02"}>
+                      Beta Cinemas 02
+                    </MenuItem>
+                    <MenuItem value={"Beta Cinemas 03"}>
+                      Beta Cinemas 03
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
+            </Grid>
           </DialogContent>
           <DialogActions>
             <Button
